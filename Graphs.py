@@ -40,6 +40,14 @@ class Graph:
         if self.has_edge(vertex1, vertex2):
             return self.graph[vertex1][vertex2]
         return None
+    
+    def get_edges(self, vertex):
+        edges = []
+        if vertex in self.graph:
+            for vertex2, weight in self.graph[vertex].items():
+                edges.append((vertex2, weight))
+        return edges
+
 
 class Node:
     def __init__(self, value):
