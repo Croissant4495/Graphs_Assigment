@@ -41,3 +41,39 @@ class Graph:
             return self.graph[vertex1][vertex2]
         return None
 
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+    
+    def add_child(self, child):
+        for i in self.children:
+            if i.value == child.value:        
+                return
+        self.children.append(child)
+
+    def remove_child(self, value):
+        for child in self.children:
+            if child.value == value:
+                self.children.remove(child)
+                return
+
+    def show_children(self):
+        print("Children: ")
+        for child in self.children:
+            print(child)
+        print("_________")
+
+    def __str__(self):
+        return f"Value: {self.value}"
+    
+    def __eq__(self, other):
+        return isinstance(other, Node) and self.value == other.value
+
+
+x = Node(5)
+x.add_child(Node(1))
+x.add_child(Node(23))
+x.add_child(Node(1))
+print(x)
+x.show_children()
