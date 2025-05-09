@@ -45,17 +45,20 @@ class Node:
     def __init__(self, value):
         self.value = value
         self.children = []
+        self.in_deg = 0
     
     def add_child(self, child):
         for i in self.children:
             if i.value == child.value:        
                 return
         self.children.append(child)
+        child.in_deg += 1
 
     def remove_child(self, value):
         for child in self.children:
             if child.value == value:
                 self.children.remove(child)
+                child.in_deg -= 1
                 return
 
     def show_children(self):
@@ -85,10 +88,18 @@ class directed_tree:
         to_node = self.add_node(to_value)
         from_node.add_child(to_node)
 
+    def remove_node(self, value):
+        try:
+            for child in self.nodes[value].children:
+                child.in_deg -= 1
+            self.nodes.pop(value)
+        except KeyError:
+            print("node not in tree")
+
     def show(self):
         for node in self.nodes.values():
             children_values = [child.value for child in node.children]
-            print(f"{node.value} → {children_values}")
+            print(f"{node.value} → {children_values} | in degree = {node.in_deg}")
     
     def has_node(self, value):
         return value in self.nodes
@@ -100,3 +111,13 @@ class directed_tree:
             if child.value == to_value:
                 return True
         return False
+    
+    def topological_print(self):
+        for node in self.nodes.values():
+            if node.in_deg == 0:
+                print(node.value, end=" ")
+                self.remove_node(node.value)
+                self.topological_print()
+                return
+        print("")
+        return
