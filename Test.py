@@ -1,0 +1,20 @@
+from Graphs import *
+
+myG = Graph()
+myG.add_vertex('a')
+myG.add_vertex('v')
+myG.add_vertex('c')
+myG.add_vertex('d')
+myG.add_edge('a', 'v', 10)
+myG.add_edge('c', 'v', 5)
+myG.add_edge('a', 'c', 4)
+myG.add_edge('c', 'd', 4)
+print(myG.graph)    
+myG.delete_edge('c', 'd')
+myG.delete_edge('c', 'd')
+
+print(myG.has_edge('a', 'v'))
+print(myG.get_edge_weight('a', 'z'))
+print(myG.has_edge('a', 'd'))
+print(myG.has_edge('a', 'z'))
+print(myG.graph)    
