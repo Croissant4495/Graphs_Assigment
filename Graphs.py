@@ -70,10 +70,33 @@ class Node:
     def __eq__(self, other):
         return isinstance(other, Node) and self.value == other.value
 
+# Directed Acylcic Graph
+class directed_tree:
+    def __init__(self):
+        self.nodes = {}
+    
+    def add_node(self, value):
+        if value not in self.nodes:
+            self.nodes[value] = Node(value)
+        return self.nodes[value]
+    
+    def add_edge(self, from_value, to_value):
+        from_node = self.add_node(from_value)
+        to_node = self.add_node(to_value)
+        from_node.add_child(to_node)
 
-x = Node(5)
-x.add_child(Node(1))
-x.add_child(Node(23))
-x.add_child(Node(1))
-print(x)
-x.show_children()
+    def show(self):
+        for node in self.nodes.values():
+            children_values = [child.value for child in node.children]
+            print(f"{node.value} → {children_values}")
+    
+    def has_node(self, value):
+        return value in self.nodes
+
+    def has_edge(self, from_value, to_value):
+        if not self.has_node(from_value) or not self.has_node(to_value):
+            return False
+        for child in self.nodes[from_value].children:
+            if child.value == to_value:
+                return True
+        return False
