@@ -47,7 +47,9 @@ class Graph:
             for vertex2, weight in self.graph[vertex].items():
                 edges.append((vertex2, weight))
         return edges
-
+    
+    def get_vertices(self):
+        return set(self.graph.keys())
 
 class Node:
     def __init__(self, value):
