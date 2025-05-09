@@ -8,6 +8,8 @@ class Graph:
             self.graph[vertex] = {}
 
     def add_edge(self, vertex1, vertex2, weight = None):
+        self.add_vertex(vertex1)
+        self.add_vertex(vertex2)
         self.graph[vertex1][vertex2] = weight
         self.graph[vertex2][vertex1] = weight
 
@@ -50,6 +52,34 @@ class Graph:
     
     def get_vertices(self):
         return set(self.graph.keys())
+    
+    def get_MST_prims(self, start_vertex):
+        MST_edges = []
+        visited = set()
+        all_vertices = self.get_vertices()
+
+        visited.add(start_vertex)
+
+        while visited != all_vertices:
+            min_weight = float('inf')
+            min_edge = None
+
+            for vertex in visited:
+                edges = self.get_edges(vertex)
+
+                for (vertex2, weight) in edges:
+
+                    if vertex2 not in visited and weight < min_weight:
+                        min_edge = (vertex, vertex2, weight)
+                        min_weight = weight
+
+            if min_edge is None:
+                break  # Graph is disconnected
+
+            MST_edges.append(min_edge)
+            visited.add(min_edge[1])
+
+        return MST_edges
 
 class Node:
     def __init__(self, value):
